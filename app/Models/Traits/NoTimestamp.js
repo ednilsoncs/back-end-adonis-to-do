@@ -1,15 +1,16 @@
 
-const NoTimestamp = () => ({
-  register(Model) {
-    Object.defineProperties(Model, {
-      createdAtColumn: {
-        get: () => null,
-      },
-      updatedAtColumn: {
-        get: () => null,
-      },
-    });
-  },
-});
+class ConvertEmptyStringsToNull {
+  async handle({ request }, next) {
+    if (Object.keys(request.body).length) {
+      request.body = Object.assign(
+        ...Object.keys(request.body).map((key) => ({
+          [key]: request.body[key] !== '' ? request.body[key] : null,
+        })),
+      );
+    }
 
-module.exports = NoTimestamp;
+    await next();
+  }
+}
+
+module.exports = ConvertEmptyStringsToNull;

@@ -1,5 +1,5 @@
 
-const ConvertEmptyStringsToNull = () => ({
+class ConvertEmptyStringsToNull {
   async handle({ request }, next) {
     if (Object.keys(request.body).length) {
       request.body = Object.assign(
@@ -10,8 +10,7 @@ const ConvertEmptyStringsToNull = () => ({
     }
 
     await next();
-  },
+  }
 }
-);
 
 module.exports = ConvertEmptyStringsToNull;
