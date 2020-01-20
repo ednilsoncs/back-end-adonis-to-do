@@ -1,6 +1,5 @@
 # Adonis API application
-
-This is the boilerplate for creating an API server in AdonisJs, it comes pre-configured with.
+This is the project for creating an API server in AdonisJs, it comes pre-configured with..
 
 1. Bodyparser
 2. Authentication
@@ -26,3 +25,6 @@ Run the following command to run startup migrations.
 ```js
 adonis migration:run
 ```
+### More Configurations
+
+In this project we are using eslint to standardize the code
