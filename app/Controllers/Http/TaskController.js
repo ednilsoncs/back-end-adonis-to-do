@@ -51,7 +51,13 @@ class TaskController {
   async show({
     params, response,
   }) {
-    const task = await Task.findOrFail(params.id);
+    let task = {};
+    try {
+      task = await Task.findOrFail(params.id);
+    } catch (e) {
+      return response.notFound('item não encontrado');
+    }
+
     return task;
   }
 
@@ -80,7 +86,12 @@ class TaskController {
    * @param {Response} ctx.response
    */
   async destroy({ params }) {
-    const task = await Task.findOrFail(params.id);
+    let task = {};
+    try {
+      task = await Task.findOrFail(params.id);
+    } catch (e) {
+      console.log(e.menssagem);
+    }
     await task.delete();
   }
 }
