@@ -1,12 +1,15 @@
-'use strict'
 
 class Task {
-  get rules () {
+  get validateAll() {
+    return true;
+  }
+
+  get rules() {
     return {
-      email: 'required|email',
-      description: 'required|string'
-    }
+      title: 'required',
+      description: 'required',
+    };
   }
 }
 
-module.exports = Task
+module.exports = Task;
