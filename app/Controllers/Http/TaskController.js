@@ -31,7 +31,11 @@ class TaskController {
    */
   async store({ request, response, auth }) {
     const data = request.only(['title', 'description']);
-    const task = await Task.create({ user_id: auth.user.id, title: data.title, description: data.description });
+    const task = await Task.create({
+      user_id: auth.user.id,
+      title: data.title,
+      description: data.description,
+    });
     return task;
   }
 
@@ -45,8 +49,10 @@ class TaskController {
    * @param {View} ctx.view
    */
   async show({
-    params, request, response, view,
+    params, response,
   }) {
+    const task = await Task.findOrFail(params.id);
+    return task;
   }
 
   /**
@@ -57,7 +63,12 @@ class TaskController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {
+  async update({ params, request }) {
+    const { title, description } = request.all();
+    const task = await Task.findOrFail(params.id);
+    task.merge({ title, description });
+    await task.save();
+    return task;
   }
 
   /**
@@ -68,7 +79,9 @@ class TaskController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {
+  async destroy({ params }) {
+    const task = await Task.findOrFail(params.id);
+    await task.delete();
   }
 }
 
